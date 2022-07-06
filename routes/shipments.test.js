@@ -15,4 +15,19 @@ describe("POST /", function () {
 
     expect(resp.body).toEqual({ shipped: expect.any(Number) });
   });
+  
+  test("invalid", async function() {
+    const resp = await request(app).post("/shipments").send({
+      productId: "",
+      name: "",
+      addr: "",
+      zip: "",
+    });
+    expect(resp.body).toEqual({
+      "error": {
+        "message": expect.any(Array),
+        "status": 400
+      }
+    })
+  })
 });
